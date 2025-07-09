@@ -1004,20 +1004,45 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const sliderTrack = document.createElement('div');
         sliderTrack.className = 'level3-slider-track';
+        sliderTrack.style.position = 'relative';
 
         // Create slider dots
-        for (let i = 0; i <= 10; i++) {
+        const numDots = 11;
+        const dots = [];
+        for (let i = 0; i < numDots; i++) {
             const dot = document.createElement('div');
             dot.className = 'level3-slider-dot';
             if (i === 2) {
                 dot.classList.add('active');
             }
             sliderTrack.appendChild(dot);
+            dots.push(dot);
         }
 
+        // Create draggable thumb
+        const thumb = document.createElement('div');
+        thumb.className = 'level3-slider-thumb';
+        thumb.style.position = 'absolute';
+        thumb.style.top = '50%';
+        thumb.style.transform = 'translate(-50%, -50%)';
+        thumb.style.zIndex = '3';
+        sliderTrack.appendChild(thumb);
+
+        // Position thumb at initial value (0)
+        function setThumbPosition(index) {
+            const trackRect = sliderTrack.getBoundingClientRect();
+            const dotRects = dots.map(dot => dot.getBoundingClientRect());
+            // Calculate relative left position of the dot within the track
+            const left = dots[index].offsetLeft + dots[index].offsetWidth / 2;
+            thumb.style.left = `${left}px`;
+        }
+        // Initial position
+        setTimeout(() => setThumbPosition(0), 0);
+
+        // Numbers below slider
         const sliderNumbers = document.createElement('div');
         sliderNumbers.className = 'level3-slider-numbers';
-        for (let i = 0; i <= 10; i++) {
+        for (let i = 0; i < numDots; i++) {
             const number = document.createElement('span');
             number.textContent = i;
             sliderNumbers.appendChild(number);
@@ -1068,53 +1093,100 @@ document.addEventListener('DOMContentLoaded', function() {
         const gameContainer = document.querySelector('.game-container');
         gameContainer.appendChild(level3Nav);
 
-        // Add interaction
-        const dots = sliderTrack.querySelectorAll('.level3-slider-dot');
-        dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                dots.forEach(d => d.classList.remove('active'));
-                dot.classList.add('active');
+        // --- Drag functionality ---
+        let isDragging = false;
+        let currentIndex = 2;
 
-                // Update the display based on slider position
-                updateLevel3Display(index);
+        function updateSlider(index) {
+            dots.forEach((d, i) => d.classList.toggle('active', i === index));
+            setThumbPosition(index);
+            updateLevel3Display(index);
+            currentIndex = index;
+            // Show/hide nav instructions and next button
+            if (index === 10) {
+                if (level3InstructionText) level3InstructionText.style.display = 'none';
+                let level3NextBtn = document.querySelector('.level3-next-btn');
+                if (!level3NextBtn) {
+                    level3NextBtn = document.createElement('button');
+                    level3NextBtn.className = 'nav-btn level3-nav-btn level3-next-btn highlighted';
+                    level3NextBtn.textContent = 'Next';
+                    level3NextBtn.addEventListener('click', function() {
+                        startLevel4();
+                    });
+                    level3Nav.appendChild(level3NextBtn);
+                }
+                level3NextBtn.style.display = 'block';
+            } else {
+                if (level3InstructionText) level3InstructionText.style.display = 'block';
+                const level3NextBtn = document.querySelector('.level3-next-btn');
+                if (level3NextBtn) level3NextBtn.style.display = 'none';
+            }
+        }
 
-                // Check if rightmost position (10) is selected
-                if (index === 10) {
-                    // Hide instruction text in Level 3 navigation
-                    const level3InstructionText = document.querySelector('.level3-nav-instruction');
-                    if (level3InstructionText) {
-                        level3InstructionText.style.display = 'none';
-                    }
+        // Click on dots
 
-                    // Create and show next button in Level 3 navigation
-                    let level3NextBtn = document.querySelector('.level3-next-btn');
-                    if (!level3NextBtn) {
-                        level3NextBtn = document.createElement('button');
-                        level3NextBtn.className = 'nav-btn level3-nav-btn level3-next-btn highlighted';
-                        level3NextBtn.textContent = 'Next';
-                        level3NextBtn.addEventListener('click', function() {
-                            startLevel4();
-                        });
-
-                        const level3Nav = document.querySelector('.level3-navigation');
-                        level3Nav.appendChild(level3NextBtn);
-                    }
-                    level3NextBtn.style.display = 'block';
-                } else {
-                    // Show instruction text if not at position 10
-                    const level3InstructionText = document.querySelector('.level3-nav-instruction');
-                    if (level3InstructionText) {
-                        level3InstructionText.style.display = 'block';
-                    }
-
-                    // Hide next button when not at position 10
-                    const level3NextBtn = document.querySelector('.level3-next-btn');
-                    if (level3NextBtn) {
-                        level3NextBtn.style.display = 'none';
-                    }
+        // Drag events
+        function getClosestDotIndex(x) {
+            const trackRect = sliderTrack.getBoundingClientRect();
+            let minDist = Infinity;
+            let closest = 0;
+            dots.forEach((dot, i) => {
+                const dotRect = dot.getBoundingClientRect();
+                const dotCenter = dotRect.left + dotRect.width / 2;
+                const dist = Math.abs(x - dotCenter);
+                if (dist < minDist) {
+                    minDist = dist;
+                    closest = i;
                 }
             });
+            return closest;
+        }
+
+        function onDrag(e) {
+            let clientX;
+            if (e.touches) {
+                clientX = e.touches[0].clientX;
+            } else {
+                clientX = e.clientX;
+            }
+            const index = getClosestDotIndex(clientX);
+            updateSlider(index);
+        }
+
+        thumb.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            document.body.style.userSelect = 'none';
         });
+        document.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                onDrag(e);
+            }
+        });
+        document.addEventListener('mouseup', (e) => {
+            if (isDragging) {
+                isDragging = false;
+                document.body.style.userSelect = '';
+            }
+        });
+        // Touch events
+        thumb.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            document.body.style.userSelect = 'none';
+        });
+        document.addEventListener('touchmove', (e) => {
+            if (isDragging) {
+                onDrag(e);
+            }
+        });
+        document.addEventListener('touchend', (e) => {
+            if (isDragging) {
+                isDragging = false;
+                document.body.style.userSelect = '';
+            }
+        });
+
+        // Initial update
+        setTimeout(() => updateSlider(0), 0);
     }
 
     // Level 5: Final display with "These numbers are called MULTIPLES of 2..."

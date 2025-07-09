@@ -1237,3 +1237,20 @@ html, body {
     height: 8px;
   }
 }
+
+.level3-slider-thumb {
+  width: 44px;
+  height: 44px;
+  background: #4CAF50;
+  border: 5px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.35);
+  cursor: grab;
+  transition: box-shadow 0.2s, background 0.2s;
+  pointer-events: auto;
+}
+.level3-slider-thumb:active {
+  box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+  cursor: grabbing;
+  background: #388e3c;
+}

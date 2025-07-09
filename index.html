@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Unit Squares Game</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+  <div class="game-container">
+    <div class="main-content">
+      <div class="left-panel">
+        <div class="instruction-text" id="instructionText">
+          <p>TAP on the UNIT SQUARES to bring them together.</p>
+          <p>What would this make?</p>
+        </div>
+        <div class="character">
+          <img src="attached_assets/Male_1751955196191.png" alt="Character" />
+        </div>
+      </div>
+      
+      <div class="right-panel">
+        <div class="game-area">
+          <div class="unit-square" id="square1" data-value="1">1</div>
+          <div class="unit-square" id="square2" data-value="1">1</div>
+          <div class="equation-display" id="equationDisplay" style="display: none;">2 × <span class="yellow-bold">1</span> = 2</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="external-nav">
+      <button class="nav-btn" id="prevBtn">Previous</button>
+      <div class="progress-dots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+      <button class="nav-btn" id="nextBtn">Next</button>
+    </div>
+  </div>
+  
+  <script src="script.js"></script>
+</body>
+</html>

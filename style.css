@@ -1,0 +1,1239 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  font-family: 'Baloo 2', cursive;
+  overflow: hidden;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-container {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  max-width: calc(100vh * 16/9);
+  max-height: calc(100vw * 9/16);
+  aspect-ratio: 16 / 9;
+  margin: 0 auto;
+  background: linear-gradient(135deg, #4a90a4 0%, #357a8b 100%);
+  position: relative;
+}
+
+.main-content {
+  display: flex;
+  flex: 1;
+  padding: 2%;
+  gap: 2%;
+  height: calc(100% - 140px);
+}
+
+.left-panel {
+  width: 35%;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  padding: 3%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  height: calc(100% + 118px);
+  margin-bottom: -118px;
+}
+
+.instruction-text {
+  color: white;
+  font-size: clamp(16px, 2.2vw, 28px);
+  font-weight: 600;
+  line-height: 1.4;
+  text-align: center;
+  padding: clamp(15px, 2.5vw, 25px);
+  max-height: 48%;
+  position: relative;
+  margin-bottom: 2%;
+}
+
+.instruction-text::after {
+  display: none;
+}
+
+.instruction-text p {
+  margin-bottom: 15px;
+}
+
+.instruction-text p:last-child {
+  margin-bottom: 0;
+}
+
+.character {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 50%;
+  padding-bottom: 2%;
+}
+
+.character img {
+  height: 110%;
+  width: auto;
+  object-fit: contain;
+  max-width: 100%;
+}
+
+/* Reduce character size in Level 2 to prevent overlapping */
+.success-state .character img {
+  height: 85%;
+}
+
+/* Slider layout for levels 3-7 */
+.slider-layout .left-panel {
+  display: none;
+}
+
+.slider-layout .main-content {
+  padding: 3% 2% 1% 2%;
+}
+
+.slider-layout .right-panel {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+}
+
+/* Level 3 specific styles */
+.level3-main-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 50%;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+}
+
+.level3-equation-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 25px;
+}
+
+.level3-equation {
+  font-size: clamp(36px, 5vw, 48px);
+  font-weight: bold;
+  color: white;
+  font-family: 'Baloo 2', cursive;
+}
+
+.level3-boxes-row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+  padding-left: 15px;
+}
+
+.level3-rod {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.level3-number {
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 4px;
+}
+
+.level3-squares {
+  display: flex;
+  gap: 3px;
+  margin-bottom: 6px;
+}
+
+.level3-square {
+  width: 42px;
+  height: 42px;
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.level3-rod-equation {
+  font-size: 12px;
+  color: white;
+  font-family: 'Baloo 2', cursive;
+}
+
+.level3-slider-container {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: clamp(20px, 3vw, 30px);
+  margin: 0 1% 10px 1%;
+  width: calc(100% - 2%);
+  height: 25%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.level3-slider-text {
+  color: white;
+  font-size: clamp(16px, 2vw, 20px);
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: 'Baloo 2', cursive;
+}
+
+.level3-slider-track {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  padding: 12px 60px;
+  margin: 0 auto 15px auto;
+  position: relative;
+  max-width: 85%;
+  width: 85%;
+}
+
+.level3-slider-track::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 60px;
+  right: 60px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.5);
+  transform: translateY(-50%);
+  border-radius: 5px;
+}
+
+.level3-slider-dot {
+  width: clamp(12px, 1.5vw, 16px);
+  height: clamp(12px, 1.5vw, 16px);
+  border-radius: 50%;
+  background: #808080;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.level3-slider-dot.active {
+  background: #4CAF50;
+  transform: scale(1.2);
+  box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+}
+
+.level3-slider-numbers {
+  display: flex;
+  justify-content: space-between;
+  color: white;
+  font-size: clamp(16px, 2vw, 22px);
+  font-weight: bold;
+  padding: 0 60px;
+  margin: 0 auto;
+  max-width: 85%;
+  width: 85%;
+}
+
+.level3-instruction {
+  background: rgba(0, 0, 0, 0.3);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-size: clamp(14px, 1.8vw, 16px);
+  font-family: 'Baloo 2', cursive;
+  font-style: italic;
+}
+
+.level-title {
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  margin-bottom: 3%;
+  font-family: 'Baloo 2', cursive;
+}
+
+/* Level 4 specific styles */
+.level4-main-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 2%;
+}
+
+.level4-title {
+  font-size: clamp(28px, 3.5vw, 40px);
+  font-weight: normal;
+  color: white;
+  text-align: center;
+  margin-bottom: 3%;
+  font-family: 'Baloo 2', cursive;
+  width: 100%;
+}
+
+.level4-title-multiples {
+  font-size: clamp(28px, 3.5vw, 40px);
+  margin-bottom: 4%;
+  font-weight: bold;
+}
+
+.level4-display-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 95%;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 4% 2%;
+  gap: 20px;
+  flex: 1;
+}
+
+/* Level 5 styles */
+.level5-main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+}
+
+.level5-title {
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: normal;
+  color: white;
+  text-align: center;
+  font-family: 'Baloo 2', cursive;
+  margin-bottom: 15px;
+}
+
+.level5-title-multiples {
+  font-size: clamp(26px, 3.2vw, 34px);
+  margin-bottom: 25px;
+}
+
+.level5-display-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex: 1;
+}
+
+.level5-all-pairs-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 90%;
+}
+
+.level5-pair-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.level5-box-pair {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.level5-box {
+  width: 40px;
+  height: 40px;
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.level5-box2-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.level5-result {
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  margin-bottom: 3px;
+  font-family: 'Baloo 2', cursive;
+}
+
+.level5-equation {
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  font-family: 'Baloo 2', cursive;
+}
+
+.level4-all-pairs-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 90%;
+}
+
+.level4-pair-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.level4-box-pair {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.level4-box {
+  width: 30px;
+  height: 30px;
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.level4-box2-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.level4-result {
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  margin-bottom: 3px;
+  font-family: 'Baloo 2', cursive;
+}
+
+.level4-equation {
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  font-family: 'Baloo 2', cursive;
+}
+
+.level4-centered-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 90%;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 3% 2%;
+}
+
+.level4-rods-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 95%;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 3% 2%;
+}
+
+.level4-numbers-row,
+.level4-rods-row,
+.level4-equations-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 2%;
+}
+
+.level4-equations-row {
+  margin-bottom: 0;
+}
+
+.level4-rod-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: clamp(40px, 4vw, 60px);
+  gap: 2px;
+}
+
+.level4-square {
+  width: clamp(18px, 2vw, 24px);
+  height: clamp(18px, 2vw, 24px);
+  background: white;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.rods-display {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: clamp(8px, 1vw, 15px);
+  margin-bottom: 4%;
+  flex-wrap: wrap;
+}
+
+.rod-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.display-square {
+  width: clamp(25px, 3vw, 35px);
+  height: clamp(25px, 3vw, 35px);
+  background: white;
+  border-radius: 4px;
+  margin: 0 1px;
+  display: inline-block;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.number-label {
+  font-size: clamp(16px, 2vw, 24px);
+  font-weight: bold;
+  color: white;
+  margin-bottom: 5px;
+  order: -1;
+}
+
+.equation-label {
+  font-size: clamp(12px, 1.5vw, 16px);
+  color: white;
+  margin-top: 5px;
+  font-family: 'Baloo 2', cursive;
+}
+
+.slider-container {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: clamp(20px, 3vw, 30px);
+  margin: 0 auto;
+  max-width: 80%;
+}
+
+.slider-text {
+  color: white;
+  font-size: clamp(16px, 2vw, 20px);
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: 'Baloo 2', cursive;
+}
+
+.slider-track {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  padding: 8px 60px;
+  margin: 0 auto 10px auto;
+  position: relative;
+  max-width: 70%;
+}
+
+.slider-track::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 60px;
+  right: 60px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.5);
+  transform: translateY(-50%);
+  border-radius: 4px;
+}
+
+.slider-dot {
+  width: clamp(12px, 1.5vw, 16px);
+  height: clamp(12px, 1.5vw, 16px);
+  border-radius: 50%;
+  background: #808080;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.slider-dot.active {
+  background: #4CAF50;
+  transform: scale(1.2);
+  box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+}
+
+.slider-numbers {
+  display: flex;
+  justify-content: space-between;
+  color: white;
+  font-size: clamp(18px, 2.2vw, 24px);
+  font-weight: bold;
+  padding: 0 60px;
+  margin: 0 auto;
+  max-width: 70%;
+}
+
+.definition-text {
+  text-align: center;
+  color: white;
+  margin-bottom: 4%;
+}
+
+.definition-text h2 {
+  font-size: clamp(28px, 3.5vw, 40px);
+  font-weight: bold;
+  margin-bottom: 20px;
+  font-family: 'Baloo 2', cursive;
+}
+
+.definition-text p {
+  font-size: clamp(16px, 2vw, 20px);
+  line-height: 1.4;
+  font-style: italic;
+}
+
+.multiples-display {
+  display: flex;
+  justify-content: center;
+  gap: clamp(15px, 2vw, 25px);
+  margin-bottom: 3%;
+  flex-wrap: wrap;
+}
+
+.multiple-group {
+  text-align: center;
+}
+
+.multiple-number {
+  font-size: clamp(18px, 2.2vw, 24px);
+  font-weight: bold;
+  color: white;
+  margin-bottom: 5px;
+}
+
+.multiple-equation {
+  font-size: clamp(12px, 1.5vw, 16px);
+  color: white;
+  font-family: 'Baloo 2', cursive;
+}
+
+/* Horizontal rods display for levels 4-5 */
+.horizontal-rods-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin: 4% 0;
+  max-width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.rods-numbers-row,
+.rods-squares-row,
+.rods-equations-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(8px, 1vw, 12px);
+  width: 100%;
+}
+
+.horizontal-number-label {
+  font-size: clamp(16px, 2vw, 22px);
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  min-width: clamp(30px, 4vw, 40px);
+}
+
+.horizontal-rod-group {
+  display: flex;
+  gap: 2px;
+  justify-content: center;
+  align-items: center;
+  min-width: clamp(30px, 4vw, 40px);
+}
+
+.horizontal-display-square {
+  width: clamp(15px, 2vw, 20px);
+  height: clamp(15px, 2vw, 20px);
+  background: white;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.horizontal-equation-label {
+  font-size: clamp(12px, 1.5vw, 16px);
+  color: white;
+  text-align: center;
+  font-family: 'Baloo 2', cursive;
+  min-width: clamp(30px, 4vw, 40px);
+}
+
+.level-subtitle {
+  font-size: clamp(24px, 3.5vw, 36px);
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  margin-bottom: 2%;
+  font-family: 'Baloo 2', cursive;
+}
+
+/* Level 6 specific styles */
+.level6-main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  height: 100%;
+  padding: 1% 3% 2% 3%;
+  gap: clamp(10px, 2vw, 20px);
+}
+
+.level6-main-title {
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  font-family: 'Baloo 2', cursive;
+  margin-bottom: clamp(6px, 1vw, 10px);
+}
+
+.level6-definition {
+  font-size: clamp(14px, 2vw, 22px);
+  color: white;
+  text-align: center;
+  font-family: 'Baloo 2', cursive;
+  line-height: 1.2;
+  margin-bottom: clamp(10px, 1.5vw, 15px);
+}
+
+.level6-numbers-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(15px, 2.5vw, 30px);
+  width: 100%;
+  margin-bottom: clamp(5px, 0.8vw, 8px);
+}
+
+.level6-number {
+  font-size: clamp(20px, 3vw, 32px);
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  font-family: 'Baloo 2', cursive;
+  min-width: clamp(25px, 3.5vw, 40px);
+}
+
+.level6-equations-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(15px, 2.5vw, 30px);
+  width: 100%;
+}
+
+.level6-equation {
+  font-size: clamp(12px, 1.8vw, 18px);
+  color: white;
+  text-align: center;
+  font-family: 'Baloo 2', cursive;
+  min-width: clamp(25px, 3.5vw, 40px);
+}
+
+/* Final multiples display for level 6 */
+.final-multiples-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin: 4% 0;
+}
+
+.final-numbers-row,
+.final-equations-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(15px, 2.5vw, 30px);
+  width: 100%;
+}
+
+.final-multiple-number {
+  font-size: clamp(20px, 2.5vw, 28px);
+  font-weight: bold;
+  color: white;
+  text-align: center;
+}
+
+.final-multiple-equation {
+  font-size: clamp(14px, 1.8vw, 18px);
+  color: white;
+  text-align: center;
+  font-family: 'Baloo 2', cursive;
+}
+
+.level-character {
+  position: absolute;
+  bottom: 10%;
+  right: 8%;
+  width: clamp(80px, 12vw, 120px);
+}
+
+.level-character img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.slider-layout .external-nav {
+  margin-left: 1%;
+  margin-right: 1%;
+  display: flex;
+  align-items: center;
+}
+
+/* Level 3 specific navigation styling - hide navigation panel */
+.slider-layout .external-nav {
+  display: none;
+}
+
+/* Level 3 navigation panel */
+.level3-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+  background: transparent;
+  border-radius: 15px;
+  margin: 10px 1% 20px 1%;
+  width: calc(100% - 2%);
+  min-height: 70px;
+}
+
+.level3-nav-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: white;
+  padding: clamp(16px, 2vw, 24px) clamp(32px, 4vw, 48px);
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: clamp(18px, 2.2vw, 24px);
+  font-weight: 600;
+  transition: background 0.3s ease;
+  font-family: 'Baloo 2', cursive;
+}
+
+.level3-nav-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.level3-nav-btn.highlighted {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-weight: bold;
+  border: 3px solid #ffff00;
+  animation: blinkBorder 1.5s infinite;
+}
+
+.level3-progress-dots {
+  display: flex;
+  gap: clamp(8px, 1vw, 12px);
+}
+
+.level3-nav-instruction {
+  background: rgba(0, 0, 0, 0.3);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-size: clamp(14px, 1.8vw, 16px);
+  font-family: 'Baloo 2', cursive;
+  font-style: italic;
+}
+
+.level3-next-btn {
+  display: none;
+}
+
+/* Level 6 navigation styling with edge-aligned buttons and centered dots */
+.level6-navigation {
+  justify-content: space-between;
+  position: relative;
+  gap: 0;
+}
+
+.level6-navigation .progress-dots {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.level6-navigation .nav-btn:first-child {
+  margin-left: 0;
+}
+
+.level6-right-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.level6-character-img {
+  width: clamp(60px, 8vw, 80px);
+  height: auto;
+  object-fit: contain;
+}
+
+.slider-layout .external-nav .nav-btn {
+  margin-right: 0;
+}
+
+.slider-layout .external-nav .progress-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 15px;
+}
+
+.slider-layout .external-nav .level3-instruction {
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.right-panel {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  padding: 3%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.game-area {
+  width: 100%;
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2%;
+  text-align: center;
+}
+
+.external-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 10px;
+  background: transparent;
+  border-radius: 15px;
+  position: relative;
+  z-index: 10;
+  margin: 0;
+  margin-left: calc(35% + 2%);
+  margin-right: 2%;
+  min-height: 70px;
+}
+
+/* Override for slider layout (levels 3-7) to align with slider panel */
+.slider-layout .external-nav {
+  margin: 0 1%;
+  padding: 0;
+  justify-content: center;
+}
+
+.unit-square {
+  width: 80px;
+  height: 80px;
+  background: white;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+  position: absolute;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.unit-square:hover {
+  transform: scale(1.05);
+}
+
+.unit-square.combined {
+  background: white;
+  color: #333;
+}
+
+.equation-display {
+  position: absolute;
+  bottom: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: bold;
+  color: white;
+  font-family: 'Baloo 2', cursive;
+  text-align: center;
+}
+
+.equation-display .yellow-bold {
+  color: #FFD700;
+  font-weight: 800;
+}
+
+.success-state .left-panel {
+  background: rgba(76, 175, 80, 0.3);
+}
+
+.success-state .right-panel {
+  background: rgba(76, 175, 80, 0.3);
+}
+
+.nav-btn:disabled {
+  opacity: 0.3;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.nav-btn.highlighted {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-weight: bold;
+  border: 3px solid #ffff00;
+  animation: blinkBorder 1.5s infinite;
+}
+
+@keyframes blinkBorder {
+  0% { border-color: #ffff00; box-shadow: 0 0 10px rgba(255, 255, 0, 0.8); }
+  50% { border-color: rgba(255, 255, 0, 0.3); box-shadow: 0 0 5px rgba(255, 255, 0, 0.3); }
+  100% { border-color: #ffff00; box-shadow: 0 0 10px rgba(255, 255, 0, 0.8); }
+}
+
+/* Position squares diagonally in right panel - centered */
+#square1 {
+  top: 30%;
+  left: 40%;
+}
+
+#square2 {
+  top: 50%;
+  left: 60%;
+}
+
+.unit-square.highlight {
+  border: 3px solid #ffff00;  box-shadow: 0 0 15px rgba(255, 255, 0, 0.8);
+  animation: pulse 1.5s infinite;
+}
+
+.two-unit-rod {
+  transition: all 0.3s ease;
+}
+
+.two-unit-rod.highlight {
+  border: 3px solid #ffff00;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(255, 255, 0, 0.8);
+  animation: pulse 1.5s infinite;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.two-unit-rod.clicked {
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.6));
+}
+
+.two-unit-rod.combined {
+  filter: none;
+}
+
+.rod-square {
+  width: 80px;
+  height: 80px;
+  background: white;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  font-weight: bold;
+  color: #333;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  flex-shrink: 0;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.nav-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: white;
+  padding: clamp(16px, 2vw, 24px) clamp(32px, 4vw, 48px);
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: clamp(18px, 2.2vw, 24px);
+  font-weight: 600;
+  transition: background 0.3s ease;
+  font-family: 'Baloo 2', cursive;
+}
+
+.nav-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.progress-dots {
+  display: flex;
+  gap: clamp(8px, 1vw, 12px);
+}
+
+.dot {
+  width: clamp(8px, 1.2vw, 12px);
+  height: clamp(8px, 1.2vw, 12px);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transition: background 0.3s ease;
+  cursor: pointer;
+}
+
+.dot.active {
+  background: white;
+}
+
+/* Responsive design */
+@media (max-width: 900px) {
+  .main-content {
+    flex-direction: column;
+    padding: 2%;
+  }
+
+  .left-panel {
+    width: 100%;
+    height: 35%;
+    flex-direction: row;
+    align-items: center;
+    order: 2;
+    gap: 2%;
+  }
+
+  .instruction-text {
+    flex: 1;
+    font-size: clamp(12px, 2.5vw, 16px);
+    max-height: 80%;
+    margin-bottom: 0;
+    padding-right: 10px;
+  }
+
+  .instruction-text::after {
+    display: none;
+  }
+
+  .character {
+    height: 100%;
+    width: 35%;
+    flex-shrink: 0;
+  }
+
+  .right-panel {
+    flex: 1;
+    order: 1;
+    margin-bottom: 2%;
+  }
+
+  .unit-square {
+    width: clamp(50px, 8vw, 60px);
+    height: clamp(50px, 8vw, 60px);
+    font-size: clamp(20px, 4vw, 28px);
+  }
+
+  .external-nav {
+    margin-top: 2%;
+    gap: clamp(15px, 3vw, 30px);
+  }
+}
+
+@media (max-width: 600px) {
+  .instruction-text {
+    font-size: 14px;
+    padding: 15px;
+  }
+
+  .nav-btn {
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+
+  .progress-dots {
+    gap: 6px;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+  }
+}
